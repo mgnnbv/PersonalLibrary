@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+
+
+{% block title %}Вход{% endblock %}
+
+
+
+{% block content %}
+
+<h2>Вход</h2>
+
+
+
+<form method="POST">
+
+    {{ form.hidden_tag() }}
+
+
+
+    <p>{{ form.email.label }}<br>{{ form.email(size=32) }}</p>
+    <p>{{ form.password.label }}<br>{{ form.password(size=32) }}</p>
+
+    <div style="display: flex; align-items: center; gap: 20px; margin: 20px 0;">
+        <div style="display: flex; align-items: center; gap: 5px;">
+            {{ form.remember() }} {{ form.remember.label }}
+        </div>
+        {{ form.submit() }}
+    </div>
+
+    <p>Нет аккаунта? <a href="{{ url_for('books.register') }}">Зарегистрироваться</a></p>
+
+</form>
+
+
+
+{% endblock %}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавление книги</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f8fc;
+            margin: 40px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+        }
+
+        form {
+            background-color: #fff;
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 4px rgba(0,123,255,0.3);
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p a {
+            display: inline-block;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #6c757d;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        p a:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <h1>Добавление книги</h1>
+
+    <form method="post">
+        <p>
+            <label for="name">Название книги:</label><br>
+            <input type="text" id="name" name="name" placeholder="Book name" required>
+        </p>
+
+        <p>
+            <label for="description">Описание:</label><br>
+            <textarea id="description" name="description" placeholder="Book description" rows="4" required></textarea>
+        </p>
+
+        <p>
+            <label for="author">Автор:</label><br>
+            <input type="text" id="author" name="author" placeholder="Book author" required>
+        </p>
+
+        <p>
+            <label for="year">Год издания:</label><br>
+            <input type="number" id="year" name="year" placeholder="Book year" min="0" required>
+        </p>
+
+        <button type="submit">Добавить книгу</button>
+    </form>
+
+    <p style="text-align:center;">
+        <a href="{{ url_for('books.profile') }}">Назад к списку книг</a>
+    </p>
+</body>
+</html>

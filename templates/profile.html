@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Личный кабинет{% endblock %}
+
+{% block content %}
+<h2>Аккаунт: {{user.username}}</h2>
+
+<div style="display: flex; gap: 30px;">
+
+    <div style="flex: 3;">
+        <h2 style="text-align: center;">Список книг</h2>
+
+        <ul style="list-style-type: none; padding: 0;">
+            {% for book in books %}
+                <li style="background: #fff; margin: 10px 0; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center;">
+                    <a href="{{ url_for('books.get_book_by_id', book_id=book.id) }}" style="text-decoration: none; color: #0066cc; font-weight: bold;">
+                        {{ book.name }}
+                    </a>
+                    <form action="{{ url_for('books.delete_book', book_id=book.id) }}" method="post" style="margin: 0;">
+                        <button type="submit" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                            Удалить
+                        </button>
+                    </form>
+                </li>
+            {% else %}
+                <li style="text-align: center; color: #666; font-style: italic;">В библиотеке нет книг</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+    
+
+    <!-- Блок поиска -->
+    <div style="flex: 1; min-width: 300px;">
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+            <h3 style="margin-top: 0; margin-bottom: 20px; color: #333; font-size: 18px; border-bottom: 2px solid #007bff; padding-bottom: 10px;">
+                🔍 Поиск книги
+            </h3>
+            
+            <form method="post">
+                <div style="margin-bottom: 15px;">
+                    <input type="text" 
+                           name="search" 
+                           placeholder="Введите название книги или автора..." 
+                           value="{{ query }}" 
+                           style="width: 100%; 
+                                  padding: 10px 12px; 
+                                  border: 1px solid #ddd; 
+                                  border-radius: 5px; 
+                                  font-size: 14px;
+                                  box-sizing: border-box;">
+                </div>
+                
+                <button type="submit" 
+                        style="width: 100%; 
+                               background: #007bff; 
+                               color: white; 
+                               border: none; 
+                               padding: 10px; 
+                               border-radius: 5px; 
+                               font-size: 16px; 
+                               font-weight: bold;
+                               cursor: pointer;
+                               transition: background 0.3s;">
+                    Найти книгу
+                </button>
+            </form>
+
+            <p style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+            <a href="{{ url_for('books.add_book') }}" 
+            style="background-color: #28a745; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; font-weight: bold;">
+                📚 Добавить новую книгу
+            </a>
+
+            <a href="{{ url_for('books.logout') }}" 
+            style="background-color: #6c757d; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; font-weight: bold;">
+                🚪 Выйти из аккаунта
+            </a>
+        </p>
+
+            {% if search_results %}
+                <div style="margin-top: 25px;">
+                    <h4 style="color: #333; font-size: 16px; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #eee;">
+                        📖 Найдено книг: {{ search_results|length }}
+                    </h4>
+                    <ul style="list-style: none; padding: 0; margin: 0; max-height: 300px; overflow-y: auto;">
+                        {% for book in search_results %}
+                            <li style="background: white; 
+                                      margin-bottom: 8px; 
+                                      padding: 10px 12px; 
+                                      border-radius: 5px; 
+                                      border-left: 4px solid #28a745;
+                                      box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                                <div style="font-weight: bold; color: #0066cc;">{{ book.name }}</div>
+                                <div style="color: #666; font-size: 13px; margin-top: 3px;">
+                                    Автор: {{ book.author }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% elif query %}
+                <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 5px; border-left: 4px solid #ffc107;">
+                    <p style="margin: 0; color: #856404;">
+                        Книг по запросу "{{ query }}" не найдено.
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
